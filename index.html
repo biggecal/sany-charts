@@ -69,7 +69,7 @@
     opacity: 0; /* GSAP animates in */
   }
   #logo-img {
-    height: 36px;
+    height: 56px;
     filter: brightness(0) invert(1);
     pointer-events: none;
   }
@@ -91,12 +91,14 @@
 
   /* ── Sliding Indicator ── */
   #tab-indicator {
-    position: absolute; bottom: 0; height: 3px;
-    background: linear-gradient(90deg, var(--pf-orange), #ff9a40);
-    border-radius: 3px 3px 0 0;
-    box-shadow: 0 0 12px rgba(245,130,32,0.6);
-    transition: none; /* GSAP handles movement */
-    z-index: 2;
+    position: absolute;
+    top: 9px;
+    height: 99%;
+    background: linear-gradient(180deg, var(--pf-orange), #ff9a40);
+    border-radius: 8px 9px 0 0;
+    box-shadow: 0 0 12px rgba(245, 130, 32, 0.6);
+    transition: none;
+    z-index: 0;
   }
 
   /* ── Individual Tab Buttons ── */
@@ -107,15 +109,15 @@
     background: none; border: none; outline: none;
     color: rgba(255,255,255,0.42);
     font-family: inherit;
-    font-size: 20px; font-weight: 700;
+    font-size: 20px; font-weight: 500;
     letter-spacing: 1.5px; text-transform: uppercase;
     cursor: pointer;
     touch-action: manipulation;
     position: relative;
-    transition: color 0.25s;
+    transition: color .5s;
     white-space: nowrap;
     overflow: hidden; /* for ripple clipping */
-    opacity: 0; /* GSAP staggers in */
+    opacity: 1; /* GSAP staggers in */
   }
 
   .tab.active {
@@ -189,7 +191,7 @@
     margin-right: 24px;
   }
   #tab-pf .pf-text {
-    font-size: 22px; font-weight: 900; font-style: italic;
+    font-size: 26px; font-weight: 900; font-style: italic;
     color: #F58220; letter-spacing: 0.5px; line-height: 1;
     text-shadow: 0 0 20px rgba(245,130,32,0.3);
   }
