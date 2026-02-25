@@ -6,35 +6,12 @@
 <title>Bigge - SANY SRA1000A Display</title>
 <link rel="stylesheet" href="style.css">
 <style>
-  /* SRA1000A compact overrides — fits more table rows */
-  .header      { padding: 20px 50px 12px; }
-  .logo-img    { height: 72px; }
-  .divider-v   { height: 50px; }
-  .title-block h1  { font-size: 27px; }
-  .title-block .subtitle { font-size: 12px; }
-  .pf-lockup   { padding: 10px 22px; }
-  .pf-logo-text { font-size: 26px; }
-  .pf-logo-text .reg { font-size: 13px; }
-  .content     { gap: 24px; padding: 6px 50px 0; height: calc(100% - 132px); }
-  .left-panel  { width: 365px; gap: 9px; }
-  .section-label { font-size: 12px; }
-  .feat-card   { border-radius: 8px; padding: 8px 12px; gap: 10px; }
-  .feat-icon   { width: 30px; height: 30px; border-radius: 6px; font-size: 13px; }
-  .feat-text   { font-size: 11px; }
-  .comp-section { margin-top: 3px; }
+  /* SRA1000A layout tweaks */
+  .left-panel  { gap: 9px; }
+  .feat-card   { padding: 8px 12px; gap: 10px; }
+  .feat-icon   { width: 30px; height: 30px; font-size: 13px; }
   .comp-grid   { gap: 4px; }
   .comp-chip   { font-size: 10px; padding: 4px 8px; }
-  .table-top   { margin-bottom: 6px; }
-  .avg-pill    { font-size: 18px; padding: 7px 20px; }
-  table        { font-size: 12px; }
-  thead th     { padding: 7px 10px; font-size: 11px; }
-  tbody tr     { border-bottom: 1px solid rgba(255,255,255,0.03); }
-  td           { padding: 4.5px 10px; }
-  .bottom-specs { gap: 8px; padding: 8px 0 0; }
-  .spec-pill   { padding: 6px 13px; min-width: 115px; }
-  .spec-pill .sv { font-size: 15px; }
-  .spec-pill .sl { font-size: 8.5px; }
-  .footer      { height: 34px; }
 </style>
 </head>
 <body>
@@ -45,25 +22,34 @@
 
 <div class="header">
   <div class="header-left">
-    <img src="img/bigge-logo.png" alt="Bigge" class="logo-img" onerror="this.style.display='none'">
-    <div class="divider-v"></div>
     <div class="title-block">
       <h1><span class="orange">SANY SRA1000A</span> vs GR-1000XL-4 CW2</h1>
       <div class="subtitle">Competitive Capacity Comparison</div>
     </div>
   </div>
-  <div class="pf-header">
-    <div class="pf-lockup">
-      <div>
-        <div class="pf-logo-text">PERFECT FLEET<span class="reg">®</span></div>
-        <div class="pf-tagline">Best-in-class fleet standard</div>
-      </div>
-    </div>
+  <div class="bottom-specs">
+    <div class="spec-pill"><span class="sv">154'</span><span class="sl">Boom Length</span></div>
+    <div class="spec-pill"><span class="sv">34'–59'</span><span class="sl">Jib Length</span></div>
+    <div class="spec-pill"><span class="sv">27' × 27'</span><span class="sl">Outrigger Spread</span></div>
+    <div class="spec-pill"><span class="sv">127,340 lbs</span><span class="sl">Shipping Weight (GVW)</span></div>
+    <div class="spec-pill"><span class="sv">15,500 lbs</span><span class="sl">Line Pull</span></div>
   </div>
 </div>
 
 <div class="content">
   <div class="left-panel">
+    <div class="comp-section">
+      <div class="section-label" style="margin-bottom:4px;">Key Components</div>
+      <div class="comp-grid">
+        <div class="comp-chip">Cummins QSB6.7</div>
+        <div class="comp-chip">Dana Transmission</div>
+        <div class="comp-chip">Kessler Axles</div>
+        <div class="comp-chip">Kawasaki Pumps</div>
+        <div class="comp-chip">Rexroth Swing Motor</div>
+        <div class="comp-chip">LED Package</div>
+      </div>
+    </div>
+
     <div class="section-label">SRA1000A Highlights</div>
     <div class="feat-card"><div class="feat-icon">🛡️</div><div class="feat-text">3-Year / 3,000-Hour Warranty</div></div>
     <div class="feat-card"><div class="feat-icon">⚙️</div><div class="feat-text">5-Year Unlimited-Hour Engine Warranty (Incl. DEF)</div></div>
@@ -75,17 +61,6 @@
     <div class="feat-card"><div class="feat-icon">💡</div><div class="feat-text">LED Light Package</div></div>
     <div class="feat-card"><div class="feat-icon">⚖️</div><div class="feat-text">Hydraulically Assisted Counterweight</div></div>
     <div class="feat-card"><div class="feat-icon">🕹️</div><div class="feat-text">Electro-Proportionate Joystick Controls</div></div>
-    <div class="comp-section">
-      <div class="section-label" style="font-size:10px;margin-bottom:4px;">Key Components</div>
-      <div class="comp-grid">
-        <div class="comp-chip">Cummins QSB6.7</div>
-        <div class="comp-chip">Dana Transmission</div>
-        <div class="comp-chip">Kessler Axles</div>
-        <div class="comp-chip">Kawasaki Pumps</div>
-        <div class="comp-chip">Rexroth Swing Motor</div>
-        <div class="comp-chip">LED Package</div>
-      </div>
-    </div>
   </div>
 
   <div class="right-panel">
@@ -134,13 +109,6 @@
           <tr><td>145</td><td class="v-gr">1,700</td><td class="v-sra">—</td><td class="d-na">—</td></tr>
         </tbody>
       </table>
-    </div>
-    <div class="bottom-specs">
-      <div class="spec-pill"><span class="sv">154'</span><span class="sl">Boom Length</span></div>
-      <div class="spec-pill"><span class="sv">34'–59'</span><span class="sl">Jib Length</span></div>
-      <div class="spec-pill"><span class="sv">27' × 27'</span><span class="sl">Outrigger Spread</span></div>
-      <div class="spec-pill"><span class="sv">127,340 lbs</span><span class="sl">Shipping Weight (GVW)</span></div>
-      <div class="spec-pill"><span class="sv">15,500 lbs</span><span class="sl">Line Pull</span></div>
     </div>
   </div>
 </div>

@@ -80,7 +80,7 @@ body {
 }
 
 .title-block h1 {
-  font-size: 30px; font-weight: 900; letter-spacing: -0.5px; line-height: 1.1;
+  font-size: 44px; font-weight: 900; letter-spacing: -0.5px; line-height: 1.1;
 }
 .title-block h1 .orange { color: var(--pf-orange); }
 .title-block .subtitle {
@@ -112,7 +112,7 @@ body {
   position: relative; z-index: 2;
   display: flex; gap: 28px;
   padding: 8px 50px 0;
-  height: calc(100% - 148px);
+  height: calc(100% - 150px);
 }
 
 /* ── Left Panel ── */
@@ -140,7 +140,7 @@ body {
   border: 1px solid rgba(245,130,32,0.15);
 }
 .feat-text {
-  font-size: 12px; font-weight: 600; line-height: 1.3;
+  font-size: 15px; font-weight: 600; line-height: 1.3;
   color: rgba(255,255,255,0.88);
 }
 
@@ -174,16 +174,19 @@ body {
 
 /* ── Load Chart Table ── */
 .tbl-wrap {
-  flex: 1; overflow: hidden; border-radius: 11px;
+  flex: 1; overflow-y: auto; border-radius: 11px;
   border: 1px solid rgba(0,51,160,0.22);
   background: rgba(0,10,30,0.55);
 }
+.tbl-wrap::-webkit-scrollbar { width: 8px; }
+.tbl-wrap::-webkit-scrollbar-track { background: rgba(0,10,30,0.3); }
+.tbl-wrap::-webkit-scrollbar-thumb { background: rgba(0,51,160,0.5); border-radius: 4px; }
 
-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+table { width: 100%; border-collapse: collapse; font-size: 19px; }
 
 thead th {
-  background: var(--bigge-blue); padding: 9px 13px;
-  text-align: center; font-weight: 800; font-size: 12px;
+  background: var(--bigge-blue); padding: 10px 15px;
+  text-align: center; font-weight: 800; font-size: 17px;
   letter-spacing: 1px; text-transform: uppercase;
   position: sticky; top: 0; z-index: 1;
 }
@@ -200,7 +203,7 @@ tbody tr {
 tbody tr:nth-child(even) { background: rgba(0,51,160,0.05); }
 
 td {
-  padding: 6px 13px; text-align: center;
+  padding: 7px 15px; text-align: center;
   font-weight: 600; font-variant-numeric: tabular-nums;
 }
 td:first-child { text-align: left; color: rgba(255,255,255,0.65); font-weight: 500; }
@@ -212,7 +215,7 @@ td.d-even  { color: rgba(255,255,255,0.5); font-weight: 600; }
 td.d-na    { color: rgba(255,255,255,0.3); }
 
 /* ── Bottom Spec Pills ── */
-.bottom-specs { display: flex; gap: 10px; padding: 10px 0 0; flex-wrap: wrap; }
+.bottom-specs { display: flex; gap: 10px; padding: 0; flex-wrap: wrap; align-items: center; }
 .spec-pill {
   background: rgba(245,130,32,0.08); border: 1px solid rgba(245,130,32,0.2);
   border-radius: 8px; padding: 7px 15px;
