@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Bigge — SANY SRA Competitive Display</title>
+
+<!-- GSAP for smooth animations -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+<style>
+  /* ── Reset & Touch Globals ── */
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    user-select: none;
+  }
+
+  :root {
+    --bigge-blue: #0033A0;
+    --pf-orange:  #F58220;
+    --dark-bg:    #0a0e1a;
+    --tab-h:      64px;
+  }
+
+  html, body {
+    width: 100vw; height: 100vh;
+    overflow: hidden;
+    background: var(--dark-bg);
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+  }
+
+  /* ── Tab Bar ── */
+  #tab-bar {
+    position: fixed; top: 0; left: 0; right: 0;
+    height: var(--tab-h);
+    background: var(--dark-bg);
+    border-bottom: 1px solid rgba(0,51,160,0.4);
+    box-shadow: 0 1px 24px rgba(0,51,160,0.25);
+    display: flex; align-items: center;
+    z-index: 100;
+    overflow: hidden;
+  }
+
+  /* 5px gradient accent stripe */
+  #tab-bar::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 5px;
+    background: linear-gradient(90deg, var(--bigge-blue) 0%, var(--pf-orange) 50%, var(--bigge-blue) 100%);
+  }
+
+  /* Ambient glow behind bar */
+  #tab-bar::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(0,51,160,0.08) 0%, transparent 100%);
+    pointer-events: none;
+  }
+
+  /* ── Logo ── */
+  #logo-link {
+    display: flex; align-items: center;
+    padding: 0 24px 0 28px;
+    height: 100%;
+    text-decoration: none;
+    flex-shrink: 0;
+    touch-action: manipulation;
+    opacity: 0; /* GSAP animates in */
+  }
+  #logo-img {
+    height: 36px;
+    filter: brightness(0) invert(1);
+    pointer-events: none;
+  }
+
+  /* ── Vertical Divider ── */
+  .nav-divider {
+    width: 1px; height: 32px; flex-shrink: 0;
+    background: linear-gradient(180deg, transparent, rgba(245,130,32,0.35), transparent);
+    margin-right: 8px;
+  }
+
+  /* ── Tabs Container ── */
+  #tabs {
+    display: flex; align-items: stretch;
+    height: 100%;
+    position: relative;
+    flex: 1;
+  }
+
+  /* ── Sliding Indicator ── */
+  #tab-indicator {
+    position: absolute; bottom: 0; height: 3px;
+    background: linear-gradient(90deg, var(--pf-orange), #ff9a40);
+    border-radius: 3px 3px 0 0;
+    box-shadow: 0 0 12px rgba(245,130,32,0.6);
+    transition: none; /* GSAP handles movement */
+    z-index: 2;
+  }
+
+  /* ── Individual Tab Buttons ── */
+  .tab {
+    display: flex; align-items: center; justify-content: center;
+    padding: 0 28px;
+    background: none; border: none; outline: none;
+    color: rgba(255,255,255,0.42);
+    font-family: inherit;
+    font-size: 13px; font-weight: 700;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    cursor: pointer;
+    touch-action: manipulation;
+    position: relative;
+    transition: color 0.25s;
+    white-space: nowrap;
+    overflow: hidden; /* for ripple clipping */
+    opacity: 0; /* GSAP staggers in */
+  }
+
+  .tab.active {
+    color: #fff;
+  }
+
+  .tab:active {
+    transform: scale(0.96);
+    transition: transform 0.1s;
+  }
+
+  /* ── Ripple Spans (created by JS) ── */
+  .ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(245,130,32,0.35);
+    pointer-events: none;
+    width: 60px; height: 60px;
+    margin-left: -30px; margin-top: -30px;
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  /* ── Loading Bar ── */
+  #load-bar {
+    position: fixed; top: var(--tab-h); left: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--pf-orange), #ff9a40);
+    box-shadow: 0 0 8px rgba(245,130,32,0.7);
+    width: 0%; opacity: 0;
+    z-index: 99;
+    pointer-events: none;
+  }
+
+  /* ── Iframe Wrapper ── */
+  #iframe-wrap {
+    position: fixed;
+    top: var(--tab-h); left: 0;
+    overflow: hidden;
+    transform-origin: top left;
+  }
+
+  /* ── Both iframes stacked ── */
+  .display-frame {
+    position: absolute; top: 0; left: 0;
+    width: 1920px; height: 1080px;
+    border: none;
+    transform-origin: top left;
+  }
+
+  #frame-a {
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 2;
+  }
+
+  #frame-b {
+    opacity: 0;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* ── Swipe hint fade (shows briefly on first load) ── */
+  #swipe-hint {
+    position: fixed;
+    bottom: 20px; left: 50%; transform: translateX(-50%);
+    color: rgba(255,255,255,0.2);
+    font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+    pointer-events: none; z-index: 200;
+    opacity: 0;
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════ TAB BAR ══════════════ -->
+<nav id="tab-bar">
+  <a id="logo-link" href="index.html" touch-action="manipulation">
+    <img id="logo-img"
+         src="img/bigge-logo.png"
+         alt="Bigge"
+         onerror="this.src='https://www.bigge.com/wp-content/uploads/2023/06/bigge-logo-blue-badge.png'">
+  </a>
+
+  <div class="nav-divider"></div>
+
+  <div id="tabs">
+    <div id="tab-indicator"></div>
+
+    <button class="tab active" data-src="bigge-sany-350-display-test.html" data-label="SRA350A">SRA350A</button>
+    <button class="tab"        data-src="bigge-sany-550-display.html"       data-label="SRA550A">SRA550A</button>
+    <button class="tab"        data-src="bigge-sany-750-display.html"       data-label="SRA750A">SRA750A</button>
+    <button class="tab"        data-src="bigge-sany-1000-display.html"      data-label="SRA1000A">SRA1000A</button>
+    <button class="tab"        data-src="bigge-sany-1200-display.html"      data-label="SRA1200A">SRA1200A</button>
+  </div>
+</nav>
+
+<!-- ══════════════ LOADING BAR ══════════════ -->
+<div id="load-bar"></div>
+
+<!-- ══════════════ IFRAME DISPLAY ══════════════ -->
+<div id="iframe-wrap">
+  <iframe id="frame-a" class="display-frame" src="bigge-sany-350-display-test.html"></iframe>
+  <iframe id="frame-b" class="display-frame" src=""></iframe>
+</div>
+
+<!-- ══════════════ SWIPE HINT ══════════════ -->
+<div id="swipe-hint">← swipe to browse →</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ─── Element refs ─── */
+  const tabs      = Array.from(document.querySelectorAll('.tab'));
+  const indicator = document.getElementById('tab-indicator');
+  const loadBar   = document.getElementById('load-bar');
+  const wrap      = document.getElementById('iframe-wrap');
+  const frameA    = document.getElementById('frame-a');
+  const frameB    = document.getElementById('frame-b');
+  const logoLink  = document.getElementById('logo-link');
+  const swipeHint = document.getElementById('swipe-hint');
+
+  const TAB_H     = 64;
+  const CONTENT_W = 1920;
+  const CONTENT_H = 1080;
+
+  /* ─── State ─── */
+  let activeIdx   = 0;
+  let isAnimating = false;
+  let activeFrame = frameA;  // currently visible
+  let stagedFrame = frameB;  // preloading in background
+
+  /* ─── Scale iframe to fill viewport (fit-to-contain, no scroll) ─── */
+  function scaleDisplay() {
+    const scaleX = window.innerWidth  / CONTENT_W;
+    const scaleY = (window.innerHeight - TAB_H) / CONTENT_H;
+    const scale  = Math.min(scaleX, scaleY);
+
+    const dispW = CONTENT_W * scale;
+    const dispH = CONTENT_H * scale;
+
+    wrap.style.width  = dispW + 'px';
+    wrap.style.height = dispH + 'px';
+
+    [frameA, frameB].forEach(f => {
+      f.style.transform = 'scale(' + scale + ')';
+    });
+  }
+
+  scaleDisplay();
+  window.addEventListener('resize', scaleDisplay);
+
+  /* ─── Move the sliding indicator to a tab ─── */
+  function moveIndicator(tabEl, animate) {
+    const tabRect  = tabEl.getBoundingClientRect();
+    const tabsRect = document.getElementById('tabs').getBoundingClientRect();
+    const targetLeft  = tabRect.left - tabsRect.left;
+    const targetWidth = tabRect.width;
+
+    if (animate) {
+      gsap.to(indicator, {
+        left: targetLeft, width: targetWidth,
+        duration: 0.38, ease: 'power2.out'
+      });
+    } else {
+      gsap.set(indicator, { left: targetLeft, width: targetWidth });
+    }
+  }
+
+  /* ─── Create ripple at touch point ─── */
+  function spawnRipple(tabEl, clientX, clientY) {
+    const rect   = tabEl.getBoundingClientRect();
+    const ripple = document.createElement('span');
+    ripple.className = 'ripple';
+    ripple.style.left = (clientX - rect.left) + 'px';
+    ripple.style.top  = (clientY - rect.top)  + 'px';
+    tabEl.appendChild(ripple);
+
+    gsap.fromTo(ripple,
+      { scale: 0, opacity: 0.45 },
+      {
+        scale: 4, opacity: 0, duration: 0.6, ease: 'power1.out',
+        onComplete: () => ripple.remove()
+      }
+    );
+  }
+
+  /* ─── Loading bar animation ─── */
+  function loadBarStart() {
+    gsap.killTweensOf(loadBar);
+    gsap.set(loadBar, { width: '0%', opacity: 1 });
+    gsap.to(loadBar, { width: '75%', duration: 0.8, ease: 'power1.out' });
+  }
+  function loadBarFinish() {
+    gsap.to(loadBar, {
+      width: '100%', duration: 0.25, ease: 'power2.in',
+      onComplete: () => gsap.to(loadBar, { opacity: 0, duration: 0.3, delay: 0.1 })
+    });
+  }
+
+  /* ─── Switch to tab by index ─── */
+  function switchTab(newIdx, touchX, touchY) {
+    if (newIdx === activeIdx || isAnimating) return;
+    isAnimating = true;
+
+    const newTab = tabs[newIdx];
+    const newSrc = newTab.dataset.src;
+
+    /* Update tab active class */
+    tabs[activeIdx].classList.remove('active');
+    newTab.classList.add('active');
+    activeIdx = newIdx;
+
+    /* Animate indicator */
+    moveIndicator(newTab, true);
+
+    /* Ripple on the tapped tab */
+    if (touchX != null) {
+      spawnRipple(newTab, touchX, touchY);
+    }
+
+    /* Loading bar */
+    loadBarStart();
+
+    /* Load into the staged frame */
+    stagedFrame.src = newSrc;
+
+    stagedFrame.onload = function () {
+      loadBarFinish();
+
+      /* Crossfade: staged becomes visible, active fades out */
+      const comingIn  = stagedFrame;
+      const goingOut  = activeFrame;
+
+      gsap.set(comingIn, { opacity: 0, pointerEvents: 'none', zIndex: 3 });
+
+      gsap.to(comingIn, {
+        opacity: 1, duration: 0.45, ease: 'power1.inOut',
+        onStart: () => { comingIn.style.pointerEvents = 'auto'; }
+      });
+      gsap.to(goingOut, {
+        opacity: 0, duration: 0.45, ease: 'power1.inOut',
+        onComplete: () => {
+          goingOut.style.pointerEvents = 'none';
+          goingOut.style.zIndex = '1';
+          comingIn.style.zIndex = '2';
+          /* Swap roles */
+          activeFrame = comingIn;
+          stagedFrame = goingOut;
+          isAnimating = false;
+        }
+      });
+    };
+  }
+
+  /* ─── Tab touch/click events ─── */
+  tabs.forEach((tab, idx) => {
+    /* touchstart for instant response */
+    tab.addEventListener('touchstart', function (e) {
+      const touch = e.changedTouches[0];
+      switchTab(idx, touch.clientX, touch.clientY);
+    }, { passive: true });
+
+    /* click fallback (desktop / headless browser fallback) */
+    tab.addEventListener('click', function (e) {
+      switchTab(idx, e.clientX, e.clientY);
+    });
+  });
+
+  /* ─── Swipe gesture on iframe wrapper ─── */
+  let swipeStartX = null;
+  let swipeStartY = null;
+
+  wrap.addEventListener('touchstart', function (e) {
+    swipeStartX = e.touches[0].clientX;
+    swipeStartY = e.touches[0].clientY;
+  }, { passive: true });
+
+  wrap.addEventListener('touchend', function (e) {
+    if (swipeStartX === null) return;
+    const deltaX = e.changedTouches[0].clientX - swipeStartX;
+    const deltaY = e.changedTouches[0].clientY - swipeStartY;
+
+    /* Only trigger swipe if horizontal motion dominates */
+    if (Math.abs(deltaX) > 80 && Math.abs(deltaX) > Math.abs(deltaY) * 1.5) {
+      if (deltaX < 0 && activeIdx < tabs.length - 1) {
+        /* Swipe left → next tab */
+        switchTab(activeIdx + 1, null, null);
+      } else if (deltaX > 0 && activeIdx > 0) {
+        /* Swipe right → previous tab */
+        switchTab(activeIdx - 1, null, null);
+      }
+    }
+    swipeStartX = null;
+    swipeStartY = null;
+  }, { passive: true });
+
+  /* ─── Double-tap anywhere on display to advance (demo kiosk mode) ─── */
+  let lastTap = 0;
+  wrap.addEventListener('touchend', function (e) {
+    const now = Date.now();
+    if (now - lastTap < 350) {
+      /* Double-tap detected */
+      const nextIdx = (activeIdx + 1) % tabs.length;
+      switchTab(nextIdx, null, null);
+    }
+    lastTap = now;
+  }, { passive: true });
+
+  /* ─── Initial page load animations (GSAP) ─── */
+  const tl = gsap.timeline({ delay: 0.1 });
+
+  /* Logo slides in from left */
+  tl.fromTo(logoLink,
+    { opacity: 0, x: -20 },
+    { opacity: 1, x: 0, duration: 0.55, ease: 'power2.out' }
+  );
+
+  /* Tabs stagger in from above */
+  tl.fromTo(tabs,
+    { opacity: 0, y: -10 },
+    { opacity: 1, y: 0, stagger: 0.07, duration: 0.4, ease: 'power2.out' },
+    '-=0.25'
+  );
+
+  /* Indicator snaps to first tab after tabs render */
+  tl.add(() => moveIndicator(tabs[0], false), '-=0.2');
+
+  /* Swipe hint fades in then out */
+  tl.to(swipeHint, { opacity: 1, duration: 0.5, delay: 0.5 })
+    .to(swipeHint, { opacity: 0, duration: 0.8, delay: 2.5 });
+
+  /* ─── Handle first frame load ─── */
+  frameA.addEventListener('load', function onFirstLoad() {
+    frameA.removeEventListener('load', onFirstLoad);
+    loadBarFinish();
+  });
+  loadBarStart();
+
+})();
+</script>
+</body>
+</html>
