@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bigge - SANY SRA750A Display</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root { --bigge-blue: #0033A0; --pf-orange: #F58220; --dark-bg: #0a0e1a; }
+  body {
+    font-family: 'Inter', sans-serif; background: var(--dark-bg); color: #fff;
+    width: 1920px; height: 1080px; overflow: hidden; position: relative;
+  }
+  .bg-grid {
+    position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(0,51,160,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(0,51,160,0.06) 1px, transparent 1px);
+    background-size: 40px 40px; animation: gridMove 25s linear infinite;
+  }
+  @keyframes gridMove { 0%{transform:translate(0,0)} 100%{transform:translate(40px,40px)} }
+  .top-bar { position: absolute; top: 0; left: 0; right: 0; height: 5px; background: linear-gradient(90deg, var(--bigge-blue) 0%, var(--pf-orange) 50%, var(--bigge-blue) 100%); }
+  .glow1 { position:absolute; top:-120px; left:-80px; width:500px; height:500px; background:radial-gradient(circle,rgba(0,51,160,0.2),transparent 70%); pointer-events:none; }
+  .glow2 { position:absolute; bottom:-150px; right:-80px; width:600px; height:600px; background:radial-gradient(circle,rgba(245,130,32,0.06),transparent 70%); pointer-events:none; }
+
+  .header { position: relative; z-index: 2; display: flex; align-items: center; justify-content: space-between; padding: 24px 50px 16px; }
+  .header-left { display: flex; align-items: center; gap: 24px; }
+  .logo-img { height: 80px; filter: brightness(0) invert(1); }
+  .divider-v { width: 2px; height: 56px; background: linear-gradient(180deg, transparent, rgba(245,130,32,0.4), transparent); }
+  .title-block h1 { font-size: 30px; font-weight: 900; letter-spacing: -0.5px; line-height: 1.1; }
+  .title-block h1 .orange { color: var(--pf-orange); }
+  .title-block .subtitle { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.4); letter-spacing: 3px; text-transform: uppercase; margin-top: 3px; }
+  .pf-header { display: flex; flex-direction: column; align-items: flex-end; }
+  .pf-lockup { display: flex; align-items: center; gap: 16px; background: linear-gradient(135deg, rgba(245,130,32,0.12), rgba(245,130,32,0.04)); border: 1px solid rgba(245,130,32,0.25); border-radius: 12px; padding: 12px 24px; }
+  .pf-logo-text { font-size: 28px; font-weight: 900; font-style: italic; color: var(--pf-orange); letter-spacing: 0.5px; line-height: 1; text-shadow: 0 0 25px rgba(245,130,32,0.25); }
+  .pf-logo-text .reg { font-size: 14px; font-style: normal; vertical-align: super; }
+  .pf-tagline { font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.35); letter-spacing: 3px; text-transform: uppercase; margin-top: 4px; text-align: right; }
+
+  .content { position: relative; z-index: 2; display: flex; gap: 28px; padding: 8px 50px 0; height: calc(100% - 148px); }
+
+  .left-panel { width: 370px; flex-shrink: 0; display: flex; flex-direction: column; gap: 11px; }
+  .section-label { font-size: 13px; font-weight: 800; letter-spacing: 3px; text-transform: uppercase; color: var(--pf-orange); margin-bottom: 0; }
+  .feat-card { background: linear-gradient(135deg, rgba(0,51,160,0.2), rgba(0,51,160,0.06)); border: 1px solid rgba(0,51,160,0.25); border-radius: 9px; padding: 9px 14px; display: flex; align-items: center; gap: 11px; transition: border-color 0.3s; }
+  .feat-card:hover { border-color: rgba(245,130,32,0.4); }
+  .feat-icon { width: 32px; height: 32px; border-radius: 7px; background: rgba(245,130,32,0.15); display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; border: 1px solid rgba(245,130,32,0.15); }
+  .feat-text { font-size: 11.5px; font-weight: 600; line-height: 1.3; color: rgba(255,255,255,0.88); }
+  .comp-section { margin-top: 4px; }
+  .comp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
+  .comp-chip { font-size: 10.5px; font-weight: 600; color: rgba(255,255,255,0.55); padding: 5px 9px; background: rgba(0,51,160,0.1); border-radius: 5px; border-left: 2px solid var(--pf-orange); }
+
+  .right-panel { flex: 1; display: flex; flex-direction: column; }
+  .table-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+  .avg-pill { background: linear-gradient(135deg, var(--pf-orange), #e06a00); color: #fff; font-weight: 900; font-size: 19px; padding: 8px 22px; border-radius: 10px; display: flex; align-items: center; gap: 10px; box-shadow: 0 4px 20px rgba(245,130,32,0.3); }
+  .avg-pill .avg-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; opacity: 0.8; }
+
+  .tbl-wrap { flex: 1; overflow: hidden; border-radius: 11px; border: 1px solid rgba(0,51,160,0.22); background: rgba(0,10,30,0.55); }
+  table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  thead th { background: var(--bigge-blue); padding: 8px 12px; text-align: center; font-weight: 800; font-size: 11.5px; letter-spacing: 1px; text-transform: uppercase; position: sticky; top: 0; z-index: 1; }
+  thead th:first-child { text-align: left; }
+  thead th.col-sra { background: linear-gradient(135deg, var(--bigge-blue), #004fd4); color: var(--pf-orange); }
+  tbody tr { border-bottom: 1px solid rgba(255,255,255,0.035); transition: background 0.2s; }
+  tbody tr:nth-child(even) { background: rgba(0,51,160,0.05); }
+  tbody tr:hover { background: rgba(245,130,32,0.08); }
+  td { padding: 5px 12px; text-align: center; font-weight: 600; font-variant-numeric: tabular-nums; }
+  td:first-child { text-align: left; color: rgba(255,255,255,0.65); font-weight: 500; }
+  td.v-gr { color: rgba(255,255,255,0.45); }
+  td.v-sra { color: #fff; font-weight: 700; }
+  td.d-pos { color: #4ADE80; font-weight: 800; }
+  td.d-neg { color: #F87171; font-weight: 700; }
+  td.d-even { color: rgba(255,255,255,0.5); font-weight: 600; }
+  td.d-na { color: rgba(255,255,255,0.3); }
+
+  .bottom-specs { display: flex; gap: 10px; padding: 10px 0 0; flex-wrap: wrap; }
+  .spec-pill { background: rgba(245,130,32,0.08); border: 1px solid rgba(245,130,32,0.2); border-radius: 8px; padding: 7px 15px; display: flex; flex-direction: column; align-items: center; min-width: 120px; }
+  .spec-pill .sv { font-size: 16px; font-weight: 900; color: var(--pf-orange); }
+  .spec-pill .sl { font-size: 9px; font-weight: 600; color: rgba(255,255,255,0.35); letter-spacing: 1px; text-transform: uppercase; margin-top: 1px; }
+
+  .footer { position: absolute; bottom: 0; left: 0; right: 0; height: 38px; background: rgba(0,51,160,0.12); border-top: 1px solid rgba(245,130,32,0.15); display: flex; align-items: center; justify-content: space-between; padding: 0 50px; z-index: 2; }
+  .footer-text { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.25); }
+  .footer-dot { color: var(--pf-orange); opacity: 0.4; }
+  .footer-r { font-size: 11px; font-weight: 600; color: rgba(245,130,32,0.35); letter-spacing: 1px; }
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="glow1"></div>
+<div class="glow2"></div>
+<div class="top-bar"></div>
+
+<div class="header">
+  <div class="header-left">
+    <img src="https://www.bigge.com/wp-content/uploads/2023/06/bigge-logo-blue-badge.png" alt="Bigge" class="logo-img" onerror="this.style.display='none'">
+    <div class="divider-v"></div>
+    <div class="title-block">
+      <h1><span class="orange">SANY SRA750A</span> vs GR-750XL</h1>
+      <div class="subtitle">Competitive Capacity Comparison</div>
+    </div>
+  </div>
+  <div class="pf-header">
+    <div class="pf-lockup">
+      <div>
+        <div class="pf-logo-text">PERFECT FLEET<span class="reg">®</span></div>
+        <div class="pf-tagline">Best-in-class fleet standard</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="content">
+  <div class="left-panel">
+    <div class="section-label">SRA750A Highlights</div>
+    <div class="feat-card"><div class="feat-icon">🛡️</div><div class="feat-text">3-Year / 3,000-Hour Warranty</div></div>
+    <div class="feat-card"><div class="feat-icon">⚙️</div><div class="feat-text">5-Year Unlimited-Hour Engine Warranty (Incl. DEF)</div></div>
+    <div class="feat-card"><div class="feat-icon">🔋</div><div class="feat-text">Auxiliary Power Unit (APU)</div></div>
+    <div class="feat-card"><div class="feat-icon">📱</div><div class="feat-text">10.1" Color Touchscreen LMI</div></div>
+    <div class="feat-card"><div class="feat-icon">📷</div><div class="feat-text">Rearview & Winch Camera w/ Monitor</div></div>
+    <div class="feat-card"><div class="feat-icon">🎮</div><div class="feat-text">Remote Control Jib (One Person Setup)</div></div>
+    <div class="feat-card"><div class="feat-icon">🔄</div><div class="feat-text">20° Tiltable Cab</div></div>
+    <div class="feat-card"><div class="feat-icon">💡</div><div class="feat-text">LED Light Package</div></div>
+    <div class="feat-card"><div class="feat-icon">🕹️</div><div class="feat-text">Electro-Proportionate Joystick Controls</div></div>
+    <div class="comp-section">
+      <div class="section-label" style="font-size:11px;margin-bottom:5px;">Key Components</div>
+      <div class="comp-grid">
+        <div class="comp-chip">Cummins QSB6.7</div>
+        <div class="comp-chip">Dana Transmission</div>
+        <div class="comp-chip">Kessler Axles</div>
+        <div class="comp-chip">Kawasaki Pumps</div>
+        <div class="comp-chip">Rexroth Swing Motor</div>
+        <div class="comp-chip">LED Package</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="right-panel">
+    <div class="table-top">
+      <div class="section-label">Load Chart Comparison (lbs at radius)</div>
+      <div class="avg-pill"><span class="avg-label">Avg Advantage</span> 102%</div>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Radius (ft)</th>
+            <th>GR-750XL</th>
+            <th class="col-sra">SRA750A</th>
+            <th>Difference</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>10</td><td class="v-gr">132,300</td><td class="v-sra">142,000</td><td class="d-pos">107%</td></tr>
+          <tr><td>15</td><td class="v-gr">98,000</td><td class="v-sra">114,200</td><td class="d-pos">117%</td></tr>
+          <tr><td>20</td><td class="v-gr">75,600</td><td class="v-sra">80,300</td><td class="d-pos">106%</td></tr>
+          <tr><td>25</td><td class="v-gr">60,000</td><td class="v-sra">62,500</td><td class="d-pos">104%</td></tr>
+          <tr><td>30</td><td class="v-gr">45,900</td><td class="v-sra">46,800</td><td class="d-pos">102%</td></tr>
+          <tr><td>35</td><td class="v-gr">38,300</td><td class="v-sra">37,900</td><td class="d-neg">99%</td></tr>
+          <tr><td>40</td><td class="v-gr">30,200</td><td class="v-sra">31,400</td><td class="d-pos">104%</td></tr>
+          <tr><td>45</td><td class="v-gr">24,800</td><td class="v-sra">25,900</td><td class="d-pos">104%</td></tr>
+          <tr><td>50</td><td class="v-gr">20,700</td><td class="v-sra">21,400</td><td class="d-pos">103%</td></tr>
+          <tr><td>55</td><td class="v-gr">17,500</td><td class="v-sra">18,300</td><td class="d-pos">105%</td></tr>
+          <tr><td>60</td><td class="v-gr">15,200</td><td class="v-sra">15,400</td><td class="d-pos">101%</td></tr>
+          <tr><td>65</td><td class="v-gr">13,200</td><td class="v-sra">13,800</td><td class="d-pos">105%</td></tr>
+          <tr><td>70</td><td class="v-gr">11,600</td><td class="v-sra">12,300</td><td class="d-pos">106%</td></tr>
+          <tr><td>75</td><td class="v-gr">10,300</td><td class="v-sra">10,800</td><td class="d-pos">105%</td></tr>
+          <tr><td>80</td><td class="v-gr">9,100</td><td class="v-sra">9,600</td><td class="d-pos">105%</td></tr>
+          <tr><td>85</td><td class="v-gr">8,100</td><td class="v-sra">8,400</td><td class="d-pos">104%</td></tr>
+          <tr><td>90</td><td class="v-gr">7,200</td><td class="v-sra">7,500</td><td class="d-pos">104%</td></tr>
+          <tr><td>95</td><td class="v-gr">6,400</td><td class="v-sra">6,700</td><td class="d-pos">105%</td></tr>
+          <tr><td>100</td><td class="v-gr">5,800</td><td class="v-sra">5,800</td><td class="d-even">100%</td></tr>
+          <tr><td>105</td><td class="v-gr">5,200</td><td class="v-sra">5,200</td><td class="d-even">100%</td></tr>
+          <tr><td>110</td><td class="v-gr">3,800</td><td class="v-sra">3,700</td><td class="d-neg">97%</td></tr>
+          <tr><td>115</td><td class="v-gr">3,300</td><td class="v-sra">3,200</td><td class="d-neg">97%</td></tr>
+          <tr><td>120</td><td class="v-gr">2,900</td><td class="v-sra">2,000</td><td class="d-neg">69%</td></tr>
+          <tr><td>125</td><td class="v-gr">1,800</td><td class="v-sra">1,600</td><td class="d-neg">89%</td></tr>
+          <tr><td>130</td><td class="v-gr">1,500</td><td class="v-sra">—</td><td class="d-na">—</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="bottom-specs">
+      <div class="spec-pill"><span class="sv">142'</span><span class="sl">Boom Length</span></div>
+      <div class="spec-pill"><span class="sv">32'–58'</span><span class="sl">Jib Length</span></div>
+      <div class="spec-pill"><span class="sv">26' × 26'</span><span class="sl">Outrigger Spread</span></div>
+      <div class="spec-pill"><span class="sv">99,616 lbs</span><span class="sl">Shipping Weight (GVW)</span></div>
+      <div class="spec-pill"><span class="sv">15,500 lbs</span><span class="sl">Line Pull</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <div class="footer-l">
+    <span class="footer-text">Bigge Crane and Rigging Co. <span class="footer-dot">·</span> Est. 1916 <span class="footer-dot">·</span> CONEXPO 2026</span>
+  </div>
+  <div class="footer-r">bigge.com</div>
+</div>
+</body>
+</html>
