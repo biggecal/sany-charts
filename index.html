@@ -21,7 +21,7 @@
     --bigge-blue: #0033A0;
     --pf-orange:  #F58220;
     --dark-bg:    #0a0e1a;
-    --tab-h:      64px;
+    --tab-h:      80px;
   }
 
   html, body {
@@ -102,11 +102,12 @@
   /* ── Individual Tab Buttons ── */
   .tab {
     display: flex; align-items: center; justify-content: center;
-    padding: 0 28px;
+    flex: 1;
+    padding: 0;
     background: none; border: none; outline: none;
     color: rgba(255,255,255,0.42);
     font-family: inherit;
-    font-size: 13px; font-weight: 700;
+    font-size: 20px; font-weight: 700;
     letter-spacing: 1.5px; text-transform: uppercase;
     cursor: pointer;
     touch-action: manipulation;
@@ -177,6 +178,27 @@
     z-index: 1;
   }
 
+  /* ── Perfect Fleet lockup in tab bar ── */
+  #tab-pf {
+    flex-shrink: 0;
+    display: flex; flex-direction: column; align-items: flex-end;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(245,130,32,0.12), rgba(245,130,32,0.04));
+    border: 1px solid rgba(245,130,32,0.25);
+    border-radius: 10px; padding: 8px 20px;
+    margin-right: 24px;
+  }
+  #tab-pf .pf-text {
+    font-size: 22px; font-weight: 900; font-style: italic;
+    color: #F58220; letter-spacing: 0.5px; line-height: 1;
+    text-shadow: 0 0 20px rgba(245,130,32,0.3);
+  }
+  #tab-pf .pf-text .reg { font-size: 11px; font-style: normal; vertical-align: super; }
+  #tab-pf .pf-sub {
+    font-size: 9px; font-weight: 600; color: rgba(255,255,255,0.35);
+    letter-spacing: 2.5px; text-transform: uppercase; margin-top: 4px;
+  }
+
   /* ── Swipe hint fade (shows briefly on first load) ── */
   #swipe-hint {
     position: fixed;
@@ -209,6 +231,11 @@
     <button class="tab"        data-src="bigge-sany-750-display.html"       data-label="SRA750A">SRA750A</button>
     <button class="tab"        data-src="bigge-sany-1000-display.html"      data-label="SRA1000A">SRA1000A</button>
     <button class="tab"        data-src="bigge-sany-1200-display.html"      data-label="SRA1200A">SRA1200A</button>
+  </div>
+
+  <div id="tab-pf">
+    <div class="pf-text">PERFECT FLEET<span class="reg">®</span></div>
+    <div class="pf-sub">Best-in-class fleet standard</div>
   </div>
 </nav>
 
