@@ -25,6 +25,7 @@ body {
   height: 1080px;
   overflow: hidden;
   position: relative;
+  padding-bottom: 80px;
 }
 
 /* ── Animated Grid Background ── */
@@ -144,7 +145,7 @@ body {
   color: rgba(255,255,255,1);
 }
 
-.comp-section { margin-top: 4px;margin-bottom:40px;border: 1px solid #ffffff4d;padding: 20px; box-shadow: 0 4px 20px rgba(245, 130, 32, 0.3);}
+.comp-section { margin-top: 4px;border: 1px solid #ffffff4d;padding: 20px; box-shadow: 0 4px 20px rgba(245, 130, 32, 0.3);}
 .comp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
 .comp-chip {
   font-size: 18px; font-weight: 300;
@@ -177,6 +178,7 @@ body {
   flex: 1; overflow-y: auto; border-radius: 11px;
   border: 1px solid rgba(0,51,160,0.22);
   background: rgba(0,10,30,0.55);
+  border: 1px solid #ffffff42;
 }
 .tbl-wrap::-webkit-scrollbar { width: 8px; }
 .tbl-wrap::-webkit-scrollbar-track { background: rgba(0,10,30,0.3); }
