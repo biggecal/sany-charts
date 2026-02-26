@@ -7,7 +7,6 @@
 
 <!-- GSAP for smooth animations -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/screenfull.js/6.0.1/screenfull.min.js"></script>
 
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@200;300;400;500;600;700;800&display=swap');
@@ -496,7 +495,11 @@
 
   /* ─── Perfect Fleet fullscreen toggle ─── */
   document.getElementById('tab-pf').addEventListener('click', function () {
-    if (screenfull.isEnabled) screenfull.toggle();
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
   });
 
   /* ─── Handle first frame load ─── */
