@@ -144,7 +144,7 @@ body {
   color: rgba(255,255,255,0.88);
 }
 
-.comp-section { margin-top: 4px;margin-bottom:40px }
+.comp-section { margin-top: 4px;margin-bottom:40px;border: 1px solid #ffffff4d;padding: 20px; }
 .comp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
 .comp-chip {
   font-size: 18px; font-weight: 300;
