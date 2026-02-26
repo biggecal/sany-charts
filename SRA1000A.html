@@ -6,6 +6,7 @@
 <title>Bigge - SANY SRA1000A Display</title>
 <link rel="stylesheet" href="style.css">
 
+<script>var t=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',t);</script>
 </head>
 <body>
 <div class="bg-grid"></div>
@@ -55,6 +56,7 @@
     <div class="feat-card"><div class="feat-icon">⚖️</div><div class="feat-text">Hydraulically Assisted Counterweight</div></div>
     <div class="feat-card"><div class="feat-icon">🕹️</div><div class="feat-text">Electro-Proportionate Joystick Controls</div></div>
   </div>
+  <a href="https://online.flippingbook.com/view/430063687/" target="_blank" style="display:block;margin-top:10px;padding:12px 18px;background:rgba(245,130,32,0.08);border:1px solid rgba(245,130,32,0.35);border-radius:9px;color:var(--pf-orange);font-family:inherit;font-size:15px;font-weight:700;letter-spacing:2px;text-transform:uppercase;text-align:center;text-decoration:none;">View Technical Specifications →</a>
 </div>
   <div class="right-panel">
     <div class="table-top">
@@ -107,5 +109,6 @@
 </div>
 
 
+<button class="theme-toggle" onclick="var h=document.documentElement,n=h.getAttribute('data-theme')==='light'?'dark':'light';h.setAttribute('data-theme',n);localStorage.setItem('theme',n)"></button>
 </body>
 </html>

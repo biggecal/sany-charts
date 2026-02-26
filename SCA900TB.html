@@ -10,6 +10,7 @@
   td, thead th { padding: 5px 8px; }
   thead th { font-size: 13px; }
 </style>
+<script>var t=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',t);</script>
 </head>
 <body>
 
@@ -60,15 +61,14 @@
       <div class="feat-card"><div class="feat-icon">🔄</div><div class="feat-text">20° Tiltable Cab</div></div>
       <div class="feat-card"><div class="feat-icon">🕹️</div><div class="feat-text">Electro-Proportionate Joystick Controls</div></div>
     </div>
+  <a href="#" style="display:block;margin-top:10px;padding:12px 18px;background:rgba(245,130,32,0.08);border:1px solid rgba(245,130,32,0.35);border-radius:9px;color:var(--pf-orange);font-family:inherit;font-size:15px;font-weight:700;letter-spacing:2px;text-transform:uppercase;text-align:center;text-decoration:none;">View Technical Specifications →</a>
   </div>
 
   <!-- RIGHT: Wide Load Chart Table -->
   <div class="right-panel">
     <div class="table-top">
       <div class="section-label">Load Chart — H Configuration (lbs at radius · 360° · Max Counterweight)</div>
-      <div class="avg-pill" style="background: rgba(0,51,160,0.7); font-size: 15px; box-shadow: 0 4px 20px rgba(0,51,160,0.4);">
-        <span class="avg-label">Config</span> Rear CW 57,300 lbs &nbsp;·&nbsp; Carbody CW 13,200 lbs
-      </div>
+      
     </div>
 
     <div class="tbl-wrap">
@@ -117,5 +117,6 @@
 
 </div>
 
+<button class="theme-toggle" onclick="var h=document.documentElement,n=h.getAttribute('data-theme')==='light'?'dark':'light';h.setAttribute('data-theme',n);localStorage.setItem('theme',n)"></button>
 </body>
 </html>
