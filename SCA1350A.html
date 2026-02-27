@@ -6,13 +6,12 @@
 <title>Bigge - SANY SCA1350A Display</title>
 <link rel="stylesheet" href="style.css">
 <style>
-  table { font-size: 15px; }
+/*  table { font-size: 15px; }*/
   td, thead th { padding: 4px 8px; }
   thead th { font-size: 16px; letter-spacing: 0.5px; }
   .right-panel::-webkit-scrollbar { height: 8px; }
   .right-panel::-webkit-scrollbar-track { background: rgba(0,10,30,0.3); }
   .right-panel::-webkit-scrollbar-thumb { background: rgba(0,51,160,0.5); border-radius: 4px; }
-  .left-panel {width: 406px;}
 </style>
 <script>var t=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',t);</script>
 </head>
@@ -34,7 +33,7 @@
 <div class="header">
   <div class="header-left">
     <div class="title-block">
-      <h1><span class="orange">SANY SCA1350A</span> vs 238 HSL · CK1600G-3 · MLC150-1</h1>
+      <h1><span class="orange">SANY SCA1350A</span> vs 238 HSL · MLC150-1</h1>
       <div class="subtitle">160 UST Lattice Crawler Crane</div>
     </div>
   </div>
@@ -53,16 +52,16 @@
 
   <!-- LEFT: Features -->
   <div class="left-panel">
-  <div style="margin-top:10px;padding:14px 16px;background:rgba(245,130,32,0.08);border:1px solid rgba(245,130,32,0.2);border-radius:9px;display:flex;gap:14px;align-items:center;">
-    <div style="text-align:center;flex-shrink:0;">
-      <div style="font-size:36px;font-weight:900;color:var(--text-primary);letter-spacing:-1px;">$1,395,000</div>
-      <div style="font-size:10px;font-weight:600;color:var(--sl-color);letter-spacing:2px;text-transform:uppercase;margin-top:2px;">Starting Price</div>
+  <div class="price-block">
+    <div class="price-block-left">
+      <div class="price-amount">$1,395,000</div>
+      <div class="price-label">Starting Price</div>
     </div>
-    <div style="width:1px;align-self:stretch;background:rgba(245,130,32,0.25);flex-shrink:0;"></div>
-    <div style="flex:1;display:flex;flex-direction:column;gap:5px;">
-      <div style="font-size:12px;font-weight:600;color:var(--pf-orange);">✓ Guaranteed Buyback</div>
-      <div style="font-size:12px;font-weight:600;color:var(--pf-orange);">✓ LPO w/ 2-Month 100% App.</div>
-      <div style="font-size:12px;font-weight:600;color:var(--pf-orange);">✓ Flexible Financing Terms</div>
+    <div class="price-divider"></div>
+    <div class="price-features">
+      <div class="price-feature">✓ Guaranteed Buyback</div>
+      <div class="price-feature">✓ LPO w/ 2-Month 100% Application</div>
+      <div class="price-feature">✓ Industries Most Flexible Financing</div>
     </div>
   </div>
     <div class="comp-section">
@@ -77,8 +76,8 @@
     <div class="comp-section">
       <div class="section-label">SCA1350A Highlights</div>
 
-      <div class="feat-card"><div class="feat-icon">🛡️</div><div class="feat-text">3-Year / 3,000-Hour Bumper-to-Bumper</div></div>
-      <div class="feat-card"><div class="feat-icon">⚙️</div><div class="feat-text">5-Year Unlimited-Hour Engine Warranty</div></div>
+    <div class="feat-card"><div class="feat-icon">🛡️</div><div class="feat-text">3-Year / 3,000-Hour Bumper-to-Bumper Warranty</div></div>
+    <div class="feat-card"><div class="feat-icon">⚙️</div><div class="feat-text">5-Year Warranty on Engine and Engine Aftertreatment</div></div>
       <div class="feat-card"><div class="feat-icon">🏆</div><div class="feat-text">325 HP Cummins QSL9 · Best in Class</div></div>
       <div class="feat-card"><div class="feat-icon">🚀</div><div class="feat-text">1.3 mph Travel Speed · Best in Class</div></div>
       <div class="feat-card"><div class="feat-icon">📌</div><div class="feat-text">Bar Pendants Standard · Faster Setup</div></div>
@@ -93,10 +92,10 @@
   </div>
 
   <!-- RIGHT: Three Tables with Horizontal Scroll -->
-  <div class="right-panel" style="flex-direction: row; gap: 12px; overflow-x: auto; overflow-y: hidden;">
+  <div class="right-panel" style="flex-direction: row; gap: 16px; overflow-x: auto; overflow-y: hidden;">
 
     <!-- Table 1: vs Link Belt 238 HSL -->
-    <div style="flex: 0 0 400px; min-width: 550px; display: flex; flex-direction: column;">
+    <div style="flex: 1; display: flex; flex-direction: column;">
       <div class="table-top">
         <div class="section-label">vs 238 HSL</div>
         <div class="avg-pill"><span class="avg-label">Avg Advantage</span> +10%</div>
@@ -151,7 +150,8 @@
       </div>
     </div>
 
-    <!-- Table 2: vs Kobelco CK1600G-3 -->
+    <!--
+    Table 2: vs Kobelco CK1600G-3 (commented out)
     <div style="flex: 0 0 400px; min-width: 550px; display: flex; flex-direction: column;">
       <div class="table-top">
         <div class="section-label">vs CK1600G-3</div>
@@ -206,9 +206,10 @@
         </table>
       </div>
     </div>
+    -->
 
     <!-- Table 3: vs Manitowoc MLC150-1 -->
-    <div style="flex: 0 0 400px; min-width: 550px; display: flex; flex-direction: column;">
+    <div style="flex: 1; display: flex; flex-direction: column;">
       <div class="table-top">
         <div class="section-label">vs MLC150-1</div>
         <div class="avg-pill"><span class="avg-label">Avg Advantage</span> +8%</div>
