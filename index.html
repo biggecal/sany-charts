@@ -157,18 +157,15 @@
   /* ── Iframe Wrapper ── */
   #iframe-wrap {
     position: fixed;
-    top: var(--tab-h); left: 0;
+    top: var(--tab-h); left: 0; right: 0; bottom: 0;
     overflow: hidden;
-    transform-origin: top left;
-    height:100% !important;
   }
 
   /* ── Both iframes stacked ── */
   .display-frame {
     position: absolute; top: 0; left: 0;
-    width: 2440px; height: 115%;
+    width: 100%; height: 100%;
     border: none;
-    transform-origin: top left;
   }
 
   #frame-a {
@@ -283,35 +280,11 @@
   const logoLink  = document.getElementById('logo-link');
   const swipeHint = document.getElementById('swipe-hint');
 
-  const TAB_H     = 64;
-  const CONTENT_W = 2440;
-  const CONTENT_H = 1372;
-
   /* ─── State ─── */
   let activeIdx   = 0;
   let isAnimating = false;
   let activeFrame = frameA;  // currently visible
   let stagedFrame = frameB;  // preloading in background
-
-  /* ─── Scale iframe to fill viewport (fit-to-contain, no scroll) ─── */
-  function scaleDisplay() {
-    const scaleX = window.innerWidth  / CONTENT_W;
-    const scaleY = (window.innerHeight - TAB_H) / CONTENT_H;
-    const scale  = Math.min(scaleX, scaleY);
-
-    const dispW = CONTENT_W * scale;
-    const dispH = CONTENT_H * scale;
-
-    wrap.style.width  = dispW + 'px';
-    wrap.style.height = dispH + 'px';
-
-    [frameA, frameB].forEach(f => {
-      f.style.transform = 'scale(' + scale + ')';
-    });
-  }
-
-  scaleDisplay();
-  window.addEventListener('resize', scaleDisplay);
 
   /* ─── Move the sliding indicator to a tab ─── */
   function moveIndicator(tabEl, animate) {
