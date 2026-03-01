@@ -20,10 +20,22 @@
   }
 
   :root {
-    --bigge-blue: #0033A0;
-    --pf-orange:  #F58220;
-    --dark-bg:    #0a0e1a;
-    --tab-h:      80px;
+    --bigge-blue:    #0033A0;
+    --pf-orange:     #F58220;
+    --dark-bg:       #0a0e1a;
+    --tab-h:         80px;
+    --tab-inactive:  rgba(255,255,255,0.42);
+    --tab-active:    #edff00;
+    --logo-filter:   brightness(0) invert(1);
+    --pf-sub-color:  rgba(255,255,255,0.35);
+  }
+
+  html[data-theme="light"] {
+    --dark-bg:       #f0f4ff;
+    --tab-inactive:  rgba(0,0,0,0.45);
+    --tab-active:    #0033A0;
+    --logo-filter:   brightness(0);
+    --pf-sub-color:  rgba(0,0,0,0.4);
   }
 
   html, body {
@@ -72,7 +84,7 @@
   }
   #logo-img {
     height: 56px;
-    filter: brightness(0) invert(1);
+    filter: var(--logo-filter);
     pointer-events: none;
   }
 
@@ -109,9 +121,9 @@
     flex: 1;
     padding: 0;
     background: none; border: none; outline: none;
-    color: rgba(255,255,255,0.42);
+    color: var(--tab-inactive);
     font-family: inherit;
-    font-size: 16px; font-weight: 500;
+    font-size: 21px; font-weight: 800;
     letter-spacing: 1.5px; text-transform: uppercase;
     cursor: pointer;
     touch-action: manipulation;
@@ -123,7 +135,7 @@
   }
 
   .tab.active {
-    color: #edff00;
+    color: var(--tab-active);
   }
 
   .tab:active {
@@ -203,7 +215,7 @@
   }
   #tab-pf .pf-text .reg { font-size: 11px; font-style: normal; vertical-align: super; }
   #tab-pf .pf-sub {
-    font-size: 7px; font-weight: 600; color: rgba(255,255,255,0.35);
+    font-size: 7px; font-weight: 600; color: var(--pf-sub-color);
     letter-spacing: 2.5px; text-transform: uppercase; margin-top: 4px;
   }
 
@@ -217,6 +229,12 @@
     opacity: 0;
   }
 </style>
+<script>
+  (function(){
+    var t = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', t);
+  })();
+</script>
 </head>
 <body>
 
@@ -484,6 +502,13 @@
     loadBarFinish();
   });
   loadBarStart();
+
+  /* ─── Sync theme when a child iframe toggles it ─── */
+  window.addEventListener('storage', function(e) {
+    if (e.key === 'theme') {
+      document.documentElement.setAttribute('data-theme', e.newValue || 'dark');
+    }
+  });
 
 })();
 </script>
