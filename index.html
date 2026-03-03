@@ -248,7 +248,7 @@
 
 <!-- ══════════════ TAB BAR ══════════════ -->
 <nav id="tab-bar">
-  <a id="logo-link" href="index.html" touch-action="manipulation">
+  <a id="logo-link" href="#" touch-action="manipulation">
     <img id="logo-img"
          src="img/bigge-logo.png"
          alt="Bigge"
@@ -496,14 +496,19 @@
   tl.to(swipeHint, { opacity: 1, duration: 0.5, delay: 0.5 })
     .to(swipeHint, { opacity: 0, duration: 0.8, delay: 2.5 });
 
-  /* ─── Perfect Fleet fullscreen toggle ─── */
-  document.getElementById('tab-pf').addEventListener('click', function () {
+  /* ─── Logo + Perfect Fleet fullscreen toggle ─── */
+  function toggleFullscreen() {
     if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen();
     } else {
       document.exitFullscreen();
     }
+  }
+  document.getElementById('logo-link').addEventListener('click', function (e) {
+    e.preventDefault();
+    toggleFullscreen();
   });
+  document.getElementById('tab-pf').addEventListener('click', toggleFullscreen);
 
   /* ─── Handle first frame load ─── */
   frameA.addEventListener('load', function onFirstLoad() {
